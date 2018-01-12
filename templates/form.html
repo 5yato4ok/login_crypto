@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST">
+    {% if name %}
+    <p>Registered Successful!!</p>
+
+    {% else %}
+            {{ form.name.label }}
+        {{ form.name() }}
+        {{ form.email.label }}
+        {{ form.email() }}
+        {{ form.submit() }}
+    {% endif %}
+</form>
+</body>
+</html>
