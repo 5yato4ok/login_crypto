@@ -1,98 +1,108 @@
 <!DOCTYPE html>
 <title>Crypto-login_app</title>
 <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" >
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <body>
 <div class="form">
-    <h1>Please login or sign up, {{ session.username|default('visitor')|capitalize }} </h1>
-    <div class="form">
-      <ul class="tab-group">
-        <li class="tab active"><a href="#signup">Sign Up</a></li>
-        {% if not session.logged_in %}
-        <li class="tab"><a href="#login">Log In</a></li>
-        {% else %}
-        <li class="tab"><a href="#login">Log Out</a></li>
-        {% endif %}
-      </ul>
-      <div class="tab-content">
-        <div id="signup">  
-        {% if not session.logged_in %}
-        <title>Registration form:</title>
-        <form action="{{ url_for('signup') }}" method="post" class="add-entry">
-                <div class="field-wrap">
-                <label>Username:<span class="req">*</span>
-              </label>
-                <input type="text" name="username">
-                </div>
-                <div class="field-wrap">
-                <label>Password:<span class="req">*</span>
-              </label>
-                <input type="password" name="password">
-                </div>
-                <div class="field-wrap">
-                <label>Age:<span class="req">*</span>
-              </label>
-                <input type="number" name="age">
-                </div>
-                <div class="field-wrap">
-                <label>Fullname:<span class="req">*</span>
-              </label>
-                <input type="text" name="fullname">
-                </div>
-                <div class="field-wrap">
-                 <label>Country:<span class="req">*</span></label>
-                <input type="text" name="country">
-                </div>
-                <div class="field-wrap">
-                 <label>Email:<span class="req">*</span></label>
-                <input type="email" name="email">
-                </div>
-                <span style="padding-left:20px"></span>
-                <button type="submit" class="button button-block" value="Sign UP"/>Get Started</button>
-        </form>
-    {% else %}
-        <h1>Hello! Here is your data:</h1>
-            {% for key,value in creds.items() %}
-            <h2>{{ key }}</h2>
-            <h3>
-                {{ value }}
-            </h3>
-            {% endfor %}
-    {% endif %}
-</div><!-- div id signup -->
-<div id="login"> 
     {% if not session.logged_in %}
-        {% if error %}<p class="error"><strong>Error:</strong>{{ error }}</p>{% endif %}
-    <form action="{{ url_for('login') }}" method="post">
-    
-        <div class="field-wrap">
-         <label>Username:<span class="req">*</span></label>
-        <input type="text" name="username">
-        </div>
-        <div class="field-wrap">
-        <label>Password:<span class="req">*</span></label>
-        <input type="password" name="password">
-        </div>
-        <button type="submit" value="Login" class="button button-block"/>Login</button>
-    
-</div>
-    {% else %}
-        <form action="{{ url_for('logout') }}">
-            <button type="submit" value="Log Out" class="button button-block"/>Log Out</button>
-        </form>
+    <h1>Please login or sign up, {{ session.username|default('visitor')|capitalize }} </h1>
     {% endif %}
-    </div><!-- div id signup -->
+    <div class="form">
+        <ul class="tab-group">
+            <li class="tab active"><a href="#signup">Sign Up</a></li>
+            {% if not session.logged_in %}
+            <li class="tab"><a href="#login">Log In</a></li>
+            {% else %}
+            <li class="tab"><a href="#login">Log Out</a></li>
+            {% endif %}
+        </ul>
+        <div class="tab-content">
+            <div id="signup">
+                {% if not session.logged_in %}
+                <title>Registration form:</title>
+                <form action="{{ url_for('signup') }}" method="post" class="add-entry">
+                    <div class="field-wrap">
+                        <label>Username:<span class="req">*</span>
+                        </label>
+                        <input type="text" name="username">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Password:<span class="req">*</span>
+                        </label>
+                        <input type="password" name="password">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Age:<span class="req">*</span>
+                        </label>
+                        <input type="number" name="age">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Fullname:<span class="req">*</span>
+                        </label>
+                        <input type="text" name="fullname">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Country:<span class="req">*</span></label>
+                        <input type="text" name="country">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Email:<span class="req">*</span></label>
+                        <input type="email" name="email">
+                    </div>
+                    <span style="padding-left:20px"></span>
+                    <button type="submit" class="button button-block" value="Sign UP"/>
+                    Get Started</button>
+                </form>
+                {% else %}
+                <h1>Hello, {{ session.username|default('visitor')|capitalize }}! Here is your profile data:</h1>
+                <h2>Your avatar</h2>
+                <img width="50%" height="50%" src="https://retailx.com/wp-content/uploads/2019/12/iStock-476085198.jpg">
+
+                {% for key,value in creds.items() %}
+                <h2>{{ key }}</h2>
+                <h3>
+                    {{ value }}
+                </h3>
+                {% endfor %}
+
+
+                {% endif %}
+            </div><!-- div id signup -->
+            <div id="login">
+                {% if not session.logged_in %}
+                {% if error %}<p class="error"><strong>Error:</strong>{{ error }}</p>{% endif %}
+                <form action="{{ url_for('login') }}" method="post">
+
+                    <div class="field-wrap">
+                        <label>Username:<span class="req">*</span></label>
+                        <input type="text" name="username">
+                    </div>
+                    <div class="field-wrap">
+                        <label>Password:<span class="req">*</span></label>
+                        <input type="password" name="password">
+                    </div>
+                    <button type="submit" value="Login" class="button button-block"/>
+                    Login</button>
+
+            </div>
+            {% else %}
+            <form action="{{ url_for('logout') }}">
+                <button type="submit" value="Log Out" class="button button-block"/>
+                Log Out</button>
+            </form>
+            {% endif %}
+        </div><!-- div id signup -->
     </div> <!-- tab-content -->
 </div>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">
-        {{ message }}
-    </div>
-    {% endfor %}
-    
-    </div>
+{% for message in get_flashed_messages() %}
+<div class="flash">
+    {{ message }}
 </div>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script  src="{{ url_for('static', filename='index.js') }}"></script>
+{% endfor %}
+
+</div>
+</div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>

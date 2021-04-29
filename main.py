@@ -76,6 +76,9 @@ def index():
     creds = None
     if session.get('logged_in'):
         creds = get_users_props(session["username"], session['password'], get_db_connect(app))
+        creds.pop('uuid', None)
+        creds.pop('salt', None)
+        creds.pop('password', None)
     return render_template("index.html", creds=creds)
 
 
